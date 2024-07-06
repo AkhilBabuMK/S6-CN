@@ -38,12 +38,13 @@ int main()
         int len, n;
         len = sizeof(cliaddr);
         n = recvfrom(sockfd, (char *)buffer, MAXLINE,MSG_WAITALL, (struct sockaddr *) &cliaddr, &len);
+        
         buffer[n] = '\0';
         printf("\nMsg from client : %s\n",buffer);
         if(strcmp(buffer,"time")==0)
         {
-            sendto(sockfd, (const char *)hello,
-            strlen(hello),MSG_CONFIRM, (const struct sockaddr *) &cliaddr, len);
+            sendto(sockfd, (char *)hello, strlen(hello), 0, (struct sockaddr*)&cliaddr, sizeof(cliaddr));
+            //sendto(sockfd, (const char *)hello,strlen(hello),MSG_CONFIRM, (const struct sockaddr *) &cliaddr, len);
             printf("TIME sent to the Client\n\n");
         }
         else
